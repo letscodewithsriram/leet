@@ -19,6 +19,7 @@ Output: 0
 Explanation: In this case, no transaction is done, i.e. max profit = 0.
 """
 
+
 def max_profit(prices) -> int:
     """
     Aim: To identify the maximum profit from the list of stock prices
@@ -29,15 +30,16 @@ def max_profit(prices) -> int:
     return: integer : max_profit
     """
     profit = [0]
-    for price_index in range(0, len(prices)-1):
-        if prices[price_index] < prices[price_index+1]:
+    for price_index in range(0, len(prices) - 1):
+        if prices[price_index] < prices[price_index + 1]:
             for internal_price_index in range(price_index, len(prices)):
                 if prices[internal_price_index] - prices[price_index] > 0:
                     # print(price_index, prices[price_index],
                     #         internal_price_index,
                     #         prices[internal_price_index],
                     #         prices[internal_price_index]-prices[price_index])
-                    profit.append(prices[internal_price_index]-prices[price_index])
+                    profit.append(prices[internal_price_index] - prices[price_index])
     return max(profit)
+
 
 print(max_profit([7, 1, 5, 4, 3, 2, 1]))
