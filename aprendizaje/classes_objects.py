@@ -137,7 +137,8 @@ class Account:
     def __init__(self, name, balance):
         self.name = name
         self.balance = balance
-        self.transactions = []
+        self.transactions = [("Opened the Account",self._current_time(),self.balance)]
+
         print("Account created for {} \nCurrent Ledger Balance: {}".format(self.name, self.balance))
 
     def show_balance(self):
@@ -162,6 +163,10 @@ class Account:
             self.transactions.append(self._current_time(), "Transaction Cancelled")
         self.show_balance()
 
+    def show_transactions(self):
+        for transact in self.transactions:
+            cp(transact)
+
 if __name__ == "__main__":
     ac1 = Account("Sriram Ramanujam", 10000)
     ac1.deposit(500)
@@ -169,10 +174,7 @@ if __name__ == "__main__":
     ac1.deposit(999)
     ac1.show_balance()
     ac1.with_draw(500)
-    for trans in ac1.transactions:
-        print(trans)
-
-
+    ac1.show_transactions()
 
 
 
