@@ -42,4 +42,27 @@ def max_profit(prices) -> int:
     return max(profit)
 
 
-print(max_profit([7, 1, 5, 4, 3, 2, 1]))
+# print(max_profit([7, 1, 5, 4, 3, 2, 1]))
+
+def max_profit_n(prices) -> int:
+    if not prices:
+        return 0
+    if len(prices) == 1:
+        return 0
+
+    max_profit = 0
+
+    price = prices[0]
+
+    for num in prices[1:]:
+
+        if num < price:
+            price = num
+
+        profit = num - price
+
+        if profit > max_profit:
+            max_profit = profit
+
+    return max_profit
+print(max_profit_n([7, 8, 5, 4, 3, 2, 1]))
