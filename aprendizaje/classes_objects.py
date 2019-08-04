@@ -123,10 +123,44 @@ if __name__ == "__main__":
     print "Executed when invoked directly"
 else: 
     print "Executed when imported"
-    
+
+What is static method?
+Ans:  static method does not receive an implicit first argument. When function decorated with @staticmethod is called, 
+we don’t pass an instance of the class to it (as we normally do with methods). This means we can put a function inside 
+a class but we can’t access the instance of that class (this is useful when your method does not use the instance).
+
+Reference: https://dbader.org/blog/meaning-of-underscores-in-python
+
+Single Leading Underscore: _var
+Single Trailing Underscore: var_
+Double Leading Underscore: __var
+Double Leading and Trailing Underscore: __var__
+Single Underscore: _
+
+Pattern	Example	Meaning
+Single Leading Underscore	_var	Naming convention indicating a name is meant for internal use. 
+                                    Generally not enforced by the Python interpreter (except in wildcard imports) 
+                                    and meant as a hint to the programmer only.
+Single Trailing Underscore	var_	Used by convention to avoid naming conflicts with Python keywords.
+Double Leading Underscore	__var	Triggers name mangling when used in a class context. 
+                                    Enforced by the Python interpreter.
+Double Leading and Trailing Underscore	__var__	Indicates special methods defined by the Python language. 
+                                                Avoid this naming scheme for your own attributes.
+Single Underscore	_	Sometimes used as a name for temporary or insignificant variables (“don’t care”). 
+                        Also: The result of the last expression in a Python REPL.
+
+What is name mangling?
+Ans: 
+
+Mangle - Destruction/Spoilt
+
+There is nothing called Private in Python; Its NON-PUBLIC
+
+
 """
 
 import datetime
+
 
 class Account:
 
@@ -135,18 +169,18 @@ class Account:
         return str(datetime.datetime.utcnow())
 
     def __init__(self, name, balance):
-        self.name = name
-        self.balance = balance
-        self.transactions = [("Opened the Account",self._current_time(),self.balance)]
+        self._name = name
+        self.__balance = balance
+        self.transactions = [("Opened the Account",self._current_time(),self.__balance)]
 
-        print("Account created for {} \nCurrent Ledger Balance: {}".format(self.name, self.balance))
+        print("Account created for {} \nCurrent Ledger Balance: {}".format(self._name, self.__balance))
 
     def show_balance(self):
-        print("Current Ledger Balance: {0}".format(self.balance))
+        print("Current Ledger Balance: {0}".format(self.__balance))
 
     def deposit(self, amount):
         if amount > 0:
-            self.balance += amount
+            self.__balance += amount
             print("Amount Deposited: {0}".format(amount))
             self.show_balance()
             self.transactions.append(("Deposit", self._current_time(), amount))
@@ -154,8 +188,8 @@ class Account:
             self.transactions.append("Failed Transaction")
 
     def with_draw(self, amount):
-        if 0 < amount < self.balance:
-            self.balance -= amount
+        if 0 < amount < self.__balance:
+            self.__balance -= amount
             print("Amount Withdrawn: {0}".format(amount))
             self.transactions.append(("Withdrawn", self._current_time(), -amount))
         else:
@@ -175,6 +209,12 @@ if __name__ == "__main__":
     ac1.show_balance()
     ac1.with_draw(500)
     ac1.show_transactions()
+
+    steph = Account("Stephan", 800)
+    steph.deposit(100)
+    steph.with_draw(200)
+    steph.show_transactions()
+    cp(steph.__dict__)
 
 
 
